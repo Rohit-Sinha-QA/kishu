@@ -119,8 +119,7 @@
     </div>
     
     <div class="no-popup" id="noPopup">
-        Saali Kutiya Kamini, 4 saal wait kar rha hu tere liye
-        Chal "YES" bol nhi to peet dunga wahi aake 😡
+        Chal ab "YES" pe click kar 😡
     </div>
 
     <script>
@@ -198,19 +197,7 @@
                 setTimeout(() => popup.style.display = "none", 12000);
             }
 
-            function createMultipleHearts() {
-                for (let i = 0; i < 250; i++) {
-                    setTimeout(() => {
-                        const heart = document.createElement("div");
-                        heart.classList.add("heart");
-                        heart.innerHTML = "❤️";
-                        heart.style.left = Math.random() * window.innerWidth + "px";
-                        heart.style.top = Math.random() * window.innerHeight + "px";
-                        document.body.appendChild(heart);
-                        setTimeout(() => heart.remove(), 2000);
-                    }, i * 50);
-                }
-            }
+            
         });
     </script>
 </body>
