@@ -110,10 +110,16 @@
     <div class="container" id="container">
         <div class="popup" id="popup">You are my heart! ❤️</div>
     </div>
-
+    <div class="fullscreen-popup" id="questionPopup">
+        <p>Do you love me? ❤️</p>
+        <div class="button-container">
+            <button class="btn yes-btn" onclick="showValentineScreen()">Yes</button>
+            <button class="btn no-btn" onclick="showRejectionMessage()">No</button>
+        </div>
+    </div>
     
     <div class="no-popup" id="noPopup">
-        Chal ab "YES" pe click kar 😡
+        Chal ab "YES" click kar
     </div>
 
     <script>
@@ -140,8 +146,8 @@
                 "img4.jpeg", "img5.jpeg", "img6.jpeg", "img7.jpeg", "img8.jpeg", "img9.jpeg"
             ];
             const sounds = [
-                "music1.mp3", "music2.mp3", "music3.mp3", 
-                "music4.mp3", "music5.mp3", "music6.mp3", "music7.mp3", "music8.mp3", "music9.mp3"
+                "music1.mp3", "music1.mp3", "music1.mp3", 
+                "music1.mp3", "music1.mp3", "music1.mp3", "music1.mp3", "music1.mp3", "music1.mp3"
             ];
             const timestamps = [0, 0, 0, 0, 0, 0, 0, 1, 0]; // Different start times for each music
             let messages = [];
@@ -188,7 +194,7 @@
                 const popup = document.getElementById("popup");
                 popup.innerText = message;
                 popup.style.display = "block";
-                setTimeout(() => popup.style.display = "none", 2000);
+                setTimeout(() => popup.style.display = "none", 12000);
             }
 
             function createMultipleHearts() {
@@ -196,7 +202,7 @@
                     setTimeout(() => {
                         const heart = document.createElement("div");
                         heart.classList.add("heart");
-                        heart.innerHTML = "";
+                        heart.innerHTML = "❤️";
                         heart.style.left = Math.random() * window.innerWidth + "px";
                         heart.style.top = Math.random() * window.innerHeight + "px";
                         document.body.appendChild(heart);
