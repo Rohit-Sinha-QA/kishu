@@ -6,7 +6,7 @@
     <title>Happy Valentine's Day</title>
     <style>
         body {
-            background: url('pic.jpg') no-repeat center center/cover;
+            background: url('back.jpg') no-repeat center center/cover;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -15,17 +15,20 @@
         }
         .container {
             position: relative;
+            display: flex; /* Use flexbox to center images */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
             width: 100%;
             height: 100%;
         }
         .image {
-            position: absolute;
             width: 180px;
             height: 180px;
             border-radius: 50%;
             object-fit: cover;
             cursor: pointer;
             transition: transform 0.3s;
+            margin: 20px; /* Add some spacing between images */
         }
         .image:hover {
             transform: scale(1.3);
@@ -102,16 +105,13 @@
             display: none;
             z-index: 3000;
         }
-
     </style>
 </head>
 <body>
-
     <div class="container" id="container">
         <div class="popup" id="popup">You are my heart! ❤️</div>
     </div>
 
-    
     <div class="no-popup" id="noPopup">
         Chal ab "YES" click kar
     </div>
@@ -120,11 +120,9 @@
         function showValentineScreen() {
             document.getElementById("questionPopup").style.display = "none";
             document.getElementById("container").style.display = "block";
-    
-            // Hide the 'No' popup in case it's visible
             document.getElementById("noPopup").style.display = "none";
-            document.querySelector(".heart-label").style.display = "flex"; // Show heart label
-}
+            document.querySelector(".heart-label").style.display = "flex";
+        }
 
         function showRejectionMessage() {
             document.getElementById("noPopup").style.display = "block";
@@ -135,56 +133,38 @@
 
         document.addEventListener("DOMContentLoaded", function() {
             const container = document.getElementById("container");
-            const images = [
-                "img1.jpeg", "img2.jpeg", "img3.jpeg", 
-                "img4.jpeg", "img5.jpeg", "img6.jpeg", "img7.jpeg", "img8.jpeg", "img9.jpeg"
-            ];
-            const sounds = [
-                "music1.mp3", "music1.mp3", "music1.mp3", 
-                "music1.mp3", "music1.mp3", "music1.mp3", "music1.mp3", "music1.mp3", "music1.mp3"
-            ];
-            const timestamps = [0, 0, 0, 0, 0, 0, 0, 1, 0]; // Different start times for each music
+            const images = ["img1.jpg", "img2.jpg", "img3.jpg"];
+            const sounds = ["music1.mp3"];
+            const timestamps = [0, 0, 0, 0, 0, 0, 0, 1, 0];
             let messages = [];
-            let currentAudio = null; // Track the currently playing audio
+            let currentAudio = null;
 
-    fetch("messages.txt")
-        .then(response => response.text())
-        .then(text => {
-            messages = text.split("\n").map(msg => msg.trim());
-            let rows = 3, cols = 3;
-            let gridWidth = 60;
-            let gridHeight = 80;
-            let startX = 40;
-            let startY = 10;
-            images.forEach((src, index) => {
-                let img = document.createElement("img");
-                img.src = src;
-                img.classList.add("image");
-                let row = Math.floor(index / cols);
-                let col = index % cols;
-                img.style.top = (startY + row * (gridHeight / rows)) + "vh";
-                img.style.left = (startX + col * (gridWidth / cols)) + "vw";
-                
-                img.onclick = function(event) {
-                    if (currentAudio) {
-                        currentAudio.pause();
-                        currentAudio.currentTime = 0;
-                    }
+            fetch("messages.txt")
+                .then(response => response.text())
+                .then(text => {
+                    messages = text.split("\n").map(msg => msg.trim());
+                    images.forEach((src, index) => {
+                        let img = document.createElement("img");
+                        img.src = src;
+                        img.classList.add("image");
 
-                    let audio = new Audio(sounds[index]);
-                    currentAudio = audio;
-                    audio.currentTime = timestamps[index]; // Start at a different timestamp for each track
-                    audio.play();
+                        img.onclick = function(event) {
+                            if (currentAudio) {
+                                currentAudio.pause();
+                                currentAudio.currentTime = 0;
+                            }
+                            let audio = new Audio(sounds[index]);
+                            currentAudio = audio;
+                            audio.currentTime = timestamps[index];
+                            audio.play();
+                            createMultipleHearts();
+                            setTimeout(() => showPopup(messages[index] || "Happy Birthday! 🎂🕯️"), 1500);
+                        };
+                        container.appendChild(img);
+                    });
+                });
 
-                    createMultipleHearts();
-                    setTimeout(() => showPopup(messages[index] || "You are my heart! ❤️"), 1500);
-                };
-                
-                container.appendChild(img);
-            });
-        });
-
-                function showPopup(message) {
+            function showPopup(message) {
                 const popup = document.getElementById("popup");
                 popup.innerText = message;
                 popup.style.display = "block";
@@ -192,16 +172,16 @@
             }
 
             function createMultipleHearts() {
-                for (let i = 0; i < 250; i++) {
+                for (let i = 0; i < 50; i++) {
                     setTimeout(() => {
                         const heart = document.createElement("div");
                         heart.classList.add("heart");
-                        heart.innerHTML = "❤️";
+                        heart.innerHTML = "🎂";
                         heart.style.left = Math.random() * window.innerWidth + "px";
                         heart.style.top = Math.random() * window.innerHeight + "px";
                         document.body.appendChild(heart);
                         setTimeout(() => heart.remove(), 2000);
-                    }, i * 50);
+                    }, i * 100);
                 }
             }
         });
